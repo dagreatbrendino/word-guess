@@ -15,14 +15,14 @@
         var status = true; 
         
         //Array of Words to choose 
-        var myWords = [];
+        var myWords = ["cat", "dog", "zebra"];
 
         //Current Word Object
-        var currentWord = {word: "cat", lettersFound: 0,
+        var currentWord = {word: " ", lettersFound: 0, displayWord: "",
 
             //Function that gets a word from my array of words and sets the current word to it
             getWord: function(){
-
+                return myWords[Math.floor(Math.random() * myWords.length)];
             },
             /*Function that checks the player's input to see if it is in my word. If the player's input is in my word, it will update the display. After that it check's if the 
             word has been completely filled in. If the word has been completely filled in, then the player's score will be updated and a new word will be chosen. If the word 
@@ -50,17 +50,17 @@
             wordComplete: function(){
                 alert ("congrats you won!")
                 lettersGuessed = "";
-                this.getWord();
-
+                this.word = this.getWord();
+                guessesLeft = 10;
             },
             displayWord: function(){
-
+                
 
             }
         }
 
         //Letter's the User has already guessed
-        var lettersGuessed = "def";
+        var lettersGuessed = "123";
         
         //Wins
         var wins = 0;
@@ -70,12 +70,13 @@
 
         //Correct Letters
         var correctLetters = "";
-
+        currentWord.word = currentWord.getWord(); debugger;
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
             //We're Playing the Game and haven't lost
             if (status){
+                
                 var playerGuess = event.key;
                 var beenGuessed = false;
                 //Defineing function that checks wether or not the player's input has already been guessed
