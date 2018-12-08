@@ -15,10 +15,10 @@
         var status = true; 
         
         //Array of Words to choose 
-        var myWords = ["cat", "dog", "zebra"];
+        var myWords = ["cat", "dog", "zebra", "doog", "lolololol", "lllllll", "a"];
 
         //Current Word Object
-        var currentWord = {word: " ", lettersFound: 0, displayWord: "",
+        var currentWord = {word: " ", numLettersFound: 0, displayWord: [],
 
             //Function that gets a word from my array of words and sets the current word to it
             getWord: function(){
@@ -29,33 +29,46 @@
             has not been completed, we wait for next input. If the player's guess was incorrect we subtract 1 from their guesses left and add their input to letters guessed. 
              */
             verifyGuess: function(pg){
-                for(j=0; j < this.word.length; j++){
-                    var incorrectGuess = false;
-                    if (pg == this.word.charAt(j)){
-                        this.lettersFound +=1;
-                        // this.word.displayWord(j) = pg;
-                        if (this.lettersFound == this.word.length){
-                            this.wordComplete();
-                        }
-                    }
-                    else{
-                        incorrectGuess = true;
+                //Start by assuming the player did not have a correct guess
+                var correctGuess = false;
+                //Compare the player's guess with every letter in the current word
+                for(i=0; i < this.word.length; i++){
+                    //If the player's guess is in the word, this will show where it is in the display word, increase the number of correct guesses for the current word,
+                    //and update the fact the player has guessed a letter correctly
+                    if (pg == this.word.charAt(i)){
+                        this.displayWord[i]= pg;
+                        this.numLettersFound +=1;
+                        correctGuess = true;
                     }
                 }
-                if (incorrectGuess){
+                //If the player's guess was not found in the current word then they lose a guess and the letter is added to the list of incorrect guesses
+                if (!correctGuess){
                     guessesLeft -=1;
                     lettersGuessed += pg;
                 }
+                //If the user has found every lettter in the current word, the word complete function is  called
+                if (this.numLettersFound == this.word.length){
+                            this.wordComplete();
+                        }
             },
+            //When this function is called, we reset the number of letters found in the word, reset the incorrect guesses, pick a new word from the array of my words,
+            //call the function to reset the display word, and reset the number of guesses
             wordComplete: function(){
                 alert ("congrats you won!")
+                this.numLettersFound = 0;
                 lettersGuessed = "";
                 this.word = this.getWord();
+                this.setDisplayWord();
                 guessesLeft = 10;
             },
-            displayWord: function(){
-                
-
+            //This function sets the display word to be a number of dashes in the spots of the letters of the word
+            setDisplayWord: function(){
+                this.displayWord = [];
+                for(l =0;l < this.word.length; l++){
+                    this.displayWord[l]= "_";
+                }
+            return this.displayWord;
+            
             }
         }
 
@@ -70,7 +83,11 @@
 
         //Correct Letters
         var correctLetters = "";
-        currentWord.word = currentWord.getWord(); debugger;
+        //This sets the first word 
+        currentWord.word = currentWord.getWord();
+        //This calls the function to set the display word to be a number of dashes equivalent to the number of letters in the word
+        currentWord.displayWord = currentWord.setDisplayWord();
+
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
@@ -79,24 +96,43 @@
                 
                 var playerGuess = event.key;
                 var beenGuessed = false;
-                //Defineing function that checks wether or not the player's input has already been guessed
+                var inDisplayWord = false;
+                //Defineing function that checks wether or not the player's input has already been guessed uf so do nothing. 
                 function alreadyGuessed (pg){
-                    for (i =0 ; i < lettersGuessed.length; i++){
+                    for (j =0 ; j < lettersGuessed.length;j++){
 
-                        if (playerGuess == lettersGuessed.charAt(i)){
+                        if (playerGuess == lettersGuessed.charAt(j)){
                         return true
                         }
                     }
                 }
                 beenGuessed = alreadyGuessed(playerGuess);
-                //If the letter has not already been guessed we call a function to check whether or not the letter is in our current word. 
+                //Check if the player has already found this letter, if so do nothing. 
+                function letterFound (pg){
+                    for (k =0; k < currentWord.displayWord.length; k++){
+                        if (playerGuess == currentWord.displayWord[k]){
+                            return true;
+                        }
+                    }
+                }
+                inDisplayWord = letterFound(playerGuess)
+                //If the letter has not already been guessed incorrectly
                 if (!beenGuessed) {
+                    //If the letter is also not already revealed to be in the word
+                    if(!inDisplayWord){
+                    //Call the function to check if the letter is in the current word
                     currentWord.verifyGuess(playerGuess);
+                    }
+                    else{
+                    //inform player that the letter has already been guessed
+                    alert("you already guessed that letter");
+                    }
                 }
                 else{
                     //inform player that the letter has already been guessed
                     alert("you already guessed that letter");
-                }
+                    }
+
             }
             //Reset the Game
             else{
