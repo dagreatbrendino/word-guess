@@ -19,7 +19,7 @@
         var status = true; 
         
         //Array of Words to choose 
-        var myWords = ["cat", "dog", "zebra", "doog", "lolololol", "lllllll", "a"];
+        var myWords = ["two words", "three words"];
 
         //Current Word Object
         var currentWord = {word: " ", numLettersFound: 0, displayWord: [],
@@ -41,7 +41,6 @@
                     //and update the fact the player has guessed a letter correctly
                     if (pg == this.word.charAt(i)){
                         this.displayWord[i]= pg;
-                        this.numLettersFound +=1;
                         correctGuess = true;
                     }
                 }
@@ -51,7 +50,7 @@
                     lettersGuessed += pg;
                 }
                 //If the user has found every lettter in the current word, the word complete function is  called
-                if (this.numLettersFound == this.word.length){
+                if (this.displayWord.join("").trim() == this.word.trim()){
                             this.wordComplete();
                         }
             },
@@ -60,7 +59,6 @@
             //call the function to reset the display word, and reset the number of guesses
             wordComplete: function(){
                 alert ("congrats you won!")
-                this.numLettersFound = 0;
                 lettersGuessed = "";
                 this.word = this.getWord();
                 this.setDisplayWord();
@@ -72,7 +70,13 @@
             setDisplayWord: function(){
                 this.displayWord = [];
                 for(l =0;l < this.word.length; l++){
+                    if(this.word.charAt(l) != " "){
                     this.displayWord[l]= "_";
+                    }
+                else{
+                    this.displayWord[l]= " ";
+                    }
+
                 }
             return this.displayWord;
             }
@@ -95,7 +99,7 @@
         currentWord.displayWord = currentWord.setDisplayWord();
         
         var  dT = document.getElementById("gameDisplay");
-        var filled = document.getElementById("filled");
+        var fillled = document.getElementById("filled");
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
@@ -121,12 +125,16 @@
                         if (playerGuess == currentWord.displayWord[k]){
                             return true;
                         }
+                        else{
+                            return false;
+                        }
                     }
                 }
                 inDisplayWord = letterFound(playerGuess)
                 //If the letter has not already been guessed incorrectly
                 if (!beenGuessed) {
                     //If the letter is also not already revealed to be in the word
+                    inDisplayWord
                     if(!inDisplayWord){
                     //Call the function to check if the letter is in the current word
                     currentWord.verifyGuess(playerGuess);
@@ -142,9 +150,15 @@
                     }
                 
                 dT.textContent = ("Wins: " + wins + " " + currentWord.displayWord + " " + lettersGuessed + " " + guessesLeft);
-                var joinDW = currentWord.displayWord.join(" ");
-                filled.textContent = joinDW;
+                var joinDW = ""
+
+                for (n=0; n < currentWord.displayWord.length; n++){
+                    joinDW += currentWord.displayWord[n];
+                    //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
+                    joinDW += "\xa0"
+                }
                 
+                fillled.textContent = joinDW;
             }
             //Reset the Game
             else{
