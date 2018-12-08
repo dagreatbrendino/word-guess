@@ -9,6 +9,10 @@
     <script src="main.js"></script>
 </head>
 <body>
+    <div>
+        <p id = "gameDisplay"></p>
+        <p id = "filled"></p>
+    </div>
     <script type="text/javascript">
         
         //Status tells wether or not the game is active 
@@ -51,6 +55,7 @@
                             this.wordComplete();
                         }
             },
+
             //When this function is called, we reset the number of letters found in the word, reset the incorrect guesses, pick a new word from the array of my words,
             //call the function to reset the display word, and reset the number of guesses
             wordComplete: function(){
@@ -59,8 +64,10 @@
                 lettersGuessed = "";
                 this.word = this.getWord();
                 this.setDisplayWord();
+                wins++;
                 guessesLeft = 10;
             },
+
             //This function sets the display word to be a number of dashes in the spots of the letters of the word
             setDisplayWord: function(){
                 this.displayWord = [];
@@ -68,7 +75,6 @@
                     this.displayWord[l]= "_";
                 }
             return this.displayWord;
-            
             }
         }
 
@@ -87,7 +93,9 @@
         currentWord.word = currentWord.getWord();
         //This calls the function to set the display word to be a number of dashes equivalent to the number of letters in the word
         currentWord.displayWord = currentWord.setDisplayWord();
-
+        
+        var  dT = document.getElementById("gameDisplay");
+        var filled = document.getElementById("filled");
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
@@ -132,7 +140,11 @@
                     //inform player that the letter has already been guessed
                     alert("you already guessed that letter");
                     }
-
+                
+                dT.textContent = ("Wins: " + wins + " " + currentWord.displayWord + " " + lettersGuessed + " " + guessesLeft);
+                var joinDW = currentWord.displayWord.join(" ");
+                filled.textContent = joinDW;
+                
             }
             //Reset the Game
             else{
