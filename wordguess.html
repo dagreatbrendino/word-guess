@@ -18,7 +18,7 @@
         var myWords = [];
 
         //Current Word Object
-        var currentWord = {word: "cat",
+        var currentWord = {word: "cat", lettersFound: 0,
 
             //Function that gets a word from my array of words and sets the current word to it
             getWord: function(){
@@ -28,13 +28,39 @@
             word has been completely filled in. If the word has been completely filled in, then the player's score will be updated and a new word will be chosen. If the word 
             has not been completed, we wait for next input. If the player's guess was incorrect we subtract 1 from their guesses left and add their input to letters guessed. 
              */
-            verifyInput: function(pg){
+            verifyGuess: function(pg){
+                for(j=0; j < this.word.length; j++){
+                    var incorrectGuess = false;
+                    if (pg == this.word.charAt(j)){
+                        this.lettersFound +=1;
+                        // this.word.displayWord(j) = pg;
+                        if (this.lettersFound == this.word.length){
+                            this.wordComplete();
+                        }
+                    }
+                    else{
+                        incorrectGuess = true;
+                    }
+                }
+                if (incorrectGuess){
+                    guessesLeft -=1;
+                    lettersGuessed += pg;
+                }
+            },
+            wordComplete: function(){
+                alert ("congrats you won!")
+                lettersGuessed = "";
+                this.getWord();
+
+            },
+            displayWord: function(){
+
 
             }
         }
 
         //Letter's the User has already guessed
-        var lettersGuessed = "abc";
+        var lettersGuessed = "def";
         
         //Wins
         var wins = 0;
@@ -64,7 +90,7 @@
                 beenGuessed = alreadyGuessed(playerGuess);
                 //If the letter has not already been guessed we call a function to check whether or not the letter is in our current word. 
                 if (!beenGuessed) {
-                    currentWord.verifyGuess();
+                    currentWord.verifyGuess(playerGuess);
                 }
                 else{
                     //inform player that the letter has already been guessed
