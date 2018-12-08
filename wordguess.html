@@ -34,7 +34,7 @@
         }
 
         //Letter's the User has already guessed
-        var lettersGuessed = "";
+        var lettersGuessed = "abc";
         
         //Wins
         var wins = 0;
@@ -48,27 +48,27 @@
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
-
-            //We're Playing the Game and haven't lossed
+            //We're Playing the Game and haven't lost
             if (status){
+                var playerGuess = event.key;
                 var beenGuessed = false;
-                var playersGuess = event.key;
                 //Defineing function that checks wether or not the player's input has already been guessed
-                function alreadyGuessed (playersGuess){
-                    for (i =0 ; i < lettersGuessed.word.lengt; i ++){
+                function alreadyGuessed (pg){
+                    for (i =0 ; i < lettersGuessed.length; i++){
 
-                        if (playersGuess === lettersGuessed.charAt(i)){
+                        if (playerGuess == lettersGuessed.charAt(i)){
                         return true
                         }
                     }
                 }
-                beenGuessed = alreadyGuessed();
+                beenGuessed = alreadyGuessed(playerGuess);
                 //If the letter has not already been guessed we call a function to check whether or not the letter is in our current word. 
-                if (!alreadyGuessed) {
+                if (!beenGuessed) {
                     currentWord.verifyGuess();
                 }
                 else{
                     //inform player that the letter has already been guessed
+                    alert("you already guessed that letter");
                 }
             }
             //Reset the Game
