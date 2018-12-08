@@ -13,14 +13,27 @@
         
         //Status tells wether or not the game is active 
         var status = true; 
-
+        
         //Array of Words to choose 
         var myWords = [];
 
         //Current Word Object
-        var currentWord = {};
+        var currentWord = {word: "cat",
 
-        //Letters Guessed  
+            //Function that gets a word from my array of words and sets the current word to it
+            getWord: function(){
+
+            },
+            /*Function that checks the player's input to see if it is in my word. If the player's input is in my word, it will update the display. After that it check's if the 
+            word has been completely filled in. If the word has been completely filled in, then the player's score will be updated and a new word will be chosen. If the word 
+            has not been completed, we wait for next input. If the player's guess was incorrect we subtract 1 from their guesses left and add their input to letters guessed. 
+             */
+            verifyInput: function(pg){
+
+            }
+        }
+
+        //Letter's the User has already guessed
         var lettersGuessed = "";
         
         //Wins
@@ -32,6 +45,37 @@
         //Correct Letters
         var correctLetters = "";
 
+        //Function that Executes when the Player Presses a Key
+        document.onkeyup = function(event){
+
+
+            //We're Playing the Game and haven't lossed
+            if (status){
+                var beenGuessed = false;
+                var playersGuess = event.key;
+                //Defineing function that checks wether or not the player's input has already been guessed
+                function alreadyGuessed (playersGuess){
+                    for (i =0 ; i < lettersGuessed.word.lengt; i ++){
+
+                        if (playersGuess === lettersGuessed.charAt(i)){
+                        return true
+                        }
+                    }
+                }
+                beenGuessed = alreadyGuessed();
+                //If the letter has not already been guessed we call a function to check whether or not the letter is in our current word. 
+                if (!alreadyGuessed) {
+                    currentWord.verifyGuess();
+                }
+                else{
+                    //inform player that the letter has already been guessed
+                }
+            }
+            //Reset the Game
+            else{
+
+            }
+        }
 
     </script>
 </body>
