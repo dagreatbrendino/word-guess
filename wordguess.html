@@ -11,12 +11,12 @@
 <body>
     <div>
         <p id = "instructions">Try to guess my word <br></p>
-        <p>Wins<br></p>
+        <p>Wins</p>
         <p id = "w"></p>
         <p id = "filled"></p>
-        <p>Guesses Left<br></p>
+        <p>Guesses Left</p>
         <p id ="gL"></p>
-        <p>Letters Guessed<br></p>
+        <p>Letters Guessed</p>
         <p id = "lg"></p>
     </div>
     <script type="text/javascript">
@@ -25,7 +25,7 @@
         var partsFilled = document.getElementById("filled");
         var numGuessesLeft = document.getElementById("gL");
         var lettersGuessedDis = document.getElementById("lg");
-        
+
         //Status tells wether or not the game is active 
         var status = true; 
 
@@ -33,9 +33,9 @@
         var playerGuess = ""
 
         //Array of Words to choose from
-        var myWords = ["two words", "three words here"];
+        var myWords = ["one", "two words", "three words here"];
 
-        //Index that contains all valid inputs. When the user guesses a letter, it is removed from valid inputs until the next word is generated. 
+        //Object that contains all valid inputs. When the user guesses a letter, it is removed from valid inputs until the next word is generated. 
         var validGuesses = {
             "a": true, "b": true, "c": true, "d": true, "e": true,"f": true,"g": true,"h": true,"i": true,"j": true,"k": true,"l": true,"m": true,"n": true,"o": true,
                 "p": true,"q": true,"r": true,"s": true,"t": true,"u": true,"v": true,"w": true,"x": true,"y": true,"z": true, 
@@ -123,9 +123,18 @@
         
         //This sets the first word 
         currentWord.word = currentWord.getWord();
-        
         //This calls the function to set the display word to be a number of dashes equivalent to the number of letters in the word
         currentWord.displayWord = currentWord.setDisplayWord();
+        //Sets placeholder so the player can see the structure of the word they need to guess
+        var joinDW = ""
+        for (q=0; q < currentWord.displayWord.length; q++){
+                    joinDW += currentWord.displayWord[q];
+                    //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
+                    joinDW += "\xa0"
+                }
+        partsFilled.textContent = joinDW;
+        numWins.textContent = wins;
+
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
@@ -145,7 +154,7 @@
                 catch(e){
                     alert("Please enter a letter a-z!")
                 }
-                var joinDW = ""
+                joinDW = ""
 
                 for (n=0; n < currentWord.displayWord.length; n++){
                     joinDW += currentWord.displayWord[n];
