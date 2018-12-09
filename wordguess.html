@@ -10,17 +10,31 @@
 </head>
 <body>
     <div>
-        <p id = "gameDisplay"></p>
+        <p id = "instructions">Try to guess my word <br></p>
+        <p>Wins<br></p>
+        <p id = "w"></p>
         <p id = "filled"></p>
+        <p>Guesses Left<br></p>
+        <p id ="gL"></p>
+        <p>Letters Guessed<br></p>
+        <p id = "lg"></p>
     </div>
     <script type="text/javascript">
+        //Initializing variables to target html elements
+        var numWins = document.getElementById("w");
+        var partsFilled = document.getElementById("filled");
+        var numGuessesLeft = document.getElementById("gL");
+        var lettersGuessedDis = document.getElementById("lg");
         
         //Status tells wether or not the game is active 
         var status = true; 
-        
-        //Array of Words to choose 
+
+        //Initializing player guess
         var playerGuess = ""
-        var myWords = ["two words", "three words"];
+
+        //Array of Words to choose from
+        var myWords = ["two words", "three words here"];
+
         //Index that contains all valid inputs. When the user guesses a letter, it is removed from valid inputs until the next word is generated. 
         var validGuesses = {
             "a": true, "b": true, "c": true, "d": true, "e": true,"f": true,"g": true,"h": true,"i": true,"j": true,"k": true,"l": true,"m": true,"n": true,"o": true,
@@ -30,7 +44,6 @@
             resetVG: function(){
                 for (p = 0; p < 26; p++){
                     this[this.alphabet.charAt(p)] = true;
-                    debugger
                 }
             }
         }
@@ -74,7 +87,7 @@
             //When this function is called, we reset the number of letters found in the word, reset the incorrect guesses, pick a new word from the array of my words,
             //call the function to reset the display word, and reset the number of guesses
             wordComplete: function(){
-                alert ("congrats you won!")
+                // alert ("congrats you won!")
                 lettersGuessed = "";
                 this.word = this.getWord();
                 this.setDisplayWord();
@@ -99,24 +112,20 @@
             }
         }
 
-        //Letter's the User has already guessed
-        var lettersGuessed = "123";
+        //Initialize letters the player has already guessed
+        var lettersGuessed = "";
         
         //Wins
         var wins = 0;
 
         //Number of Guesses Left
         var guessesLeft = 10;
-
-        //Correct Letters
-        var correctLetters = "";
+        
         //This sets the first word 
         currentWord.word = currentWord.getWord();
+        
         //This calls the function to set the display word to be a number of dashes equivalent to the number of letters in the word
         currentWord.displayWord = currentWord.setDisplayWord();
-        
-        var  dT = document.getElementById("gameDisplay");
-        var fillled = document.getElementById("filled");
         //Function that Executes when the Player Presses a Key
         document.onkeyup = function(event){
 
@@ -130,14 +139,12 @@
                         currentWord.verifyGuess(playerGuess);
                     }
                     else{
-                        alert("you already guessed that letter")
+                        // alert("you already guessed that letter")
                     }
                 }
                 catch(e){
                     alert("Please enter a letter a-z!")
                 }
-                
-                dT.textContent = ("Wins: " + wins + " " + currentWord.displayWord + " " + lettersGuessed + " " + guessesLeft);
                 var joinDW = ""
 
                 for (n=0; n < currentWord.displayWord.length; n++){
@@ -145,8 +152,10 @@
                     //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
                     joinDW += "\xa0"
                 }
-                
-                fillled.textContent = joinDW;
+                numWins.textContent = wins;
+                partsFilled.textContent = joinDW;
+                numGuessesLeft.textContent = guessesLeft;
+                lettersGuessedDis.textContent = lettersGuessed;
             }
             //Reset the Game
             else{
