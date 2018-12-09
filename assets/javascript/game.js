@@ -6,7 +6,8 @@ var partsFilled = document.getElementById("filled");
 var numGuessesLeft = document.getElementById("gL");
 var lettersGuessedDis = document.getElementById("lg");
 var albumCollage = document.getElementsByClassName("img-border");
-debugger
+var displayAlbum = document.getElementById("display-image");
+var artistIndex= 0;
 //Status tells wether or not the game is active 
 var playing = true;
 
@@ -15,6 +16,8 @@ var playerGuess = ""
 
 //Array of Words to choose from
 var myWords = ["kendrick lamar", "kanye west", "drake"];
+var artistArray=[{artistName: "kendrick lamar", alreadyGuessed: false, albumImg: "assets/images/kendricklamar.jpg"},{artistName: "kanye west",alreadyGuessed: false,
+albumImg: "assets/images/kanyewest.jpg"},{artistName:"drake", alreadyGuessed: false, albumImg:"assets/images/drake.jpg"}]
 //Array of images for rapper album art work
 var albumArt = { "kendrick lamar": "assets/images/kendricklamar.jpg", "kanye west": "assets/images/kanyewest.jpg", "drake": "assets/images/drake.jpg" }
 
@@ -37,8 +40,16 @@ var currentWord = {
 
     //Function that gets a word from my array of words and sets the current word to it
     getWord: function () {
-
-        return myWords[Math.floor(Math.random() * myWords.length)];
+        artistIndex = Math.floor(Math.random() * artistArray.length)
+        debugger;
+        if(!(artistArray[artistIndex].alreadyGuessed)){
+            return artistArray[artistIndex].artistName;
+            debugger
+        }
+        else{
+            debugger;
+            this.getWord();
+        }
     },
     /*Function that checks the player's input to see if it is in my word. If the player's input is in my word, it will update the display. After that it check's if the 
     word has been completely filled in. If the word has been completely filled in, then the player's score will be updated and a new word will be chosen. If the word 
@@ -74,19 +85,27 @@ var currentWord = {
         }
     },
 
-    /*When this function is called it is because all letters have been correctly guessed, the list of incorrect guesses is reset, a new word is picked, the display 
-    word is reset to unrevealed, the number of wins is incremeneted and guesses are reset. We then call the function to revalidate all inputs a-z */
+    /*When this function is called it is because all letters have been correctly guessed. The list of incorrect guesses is reset, The display album will be revealed to be the 
+    artist who was just found. The artist's album art work will also be updated in the album collage. A new word is picked and passed to the display word.  a new word is picked
+   , the number of wins is incremeneted and guesses are reset. We then call the function to revalidate all inputs a-z */
     wordComplete: function () {
+        artistArray[artistIndex].alreadyGuessed = true;
+        debugger
         lettersGuessed = "";
         var idString = this.word;
         idString = idString.replace(/\s+/g, '');
         var updatedAlbum = document.getElementById(idString);
         updatedAlbum.setAttribute("src", albumArt[currentWord.word]);
-        this.word = this.getWord();
+        displayAlbum.setAttribute("src", albumArt[currentWord.word]);
+        currentWord.word = this.getWord();
+        debugger
         this.setDisplayWord();
+        debugger
         wins++;
         guessesLeft = 10;
+        debugger
         validGuesses.resetVG();
+        debugger
 
     },
 
@@ -100,7 +119,6 @@ var currentWord = {
             else {
                 this.displayWord[l] = " ";
             }
-
         }
         return this.displayWord;
     },
@@ -133,6 +151,7 @@ for (q = 0; q < currentWord.displayWord.length; q++) {
     //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
     joinDW += "\xa0"
 }
+//Initializes rest of display
 partsFilled.textContent = joinDW;
 numWins.textContent = wins;
 gL.textContent = guessesLeft;
@@ -159,6 +178,7 @@ document.onkeyup = function (event) {
         }
         catch (e) {
             alert("Please enter a letter a-z! " + e.message)
+            ProcessExceptionInformation(e.message, e.stack)
 
         }
         //updates the preview of the word if needeed
@@ -168,6 +188,7 @@ document.onkeyup = function (event) {
             //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
             joinDW += "\xa0"
         }
+        //updates the rest of the desplay
         numWins.textContent = wins;
         partsFilled.textContent = joinDW;
         numGuessesLeft.textContent = guessesLeft;
@@ -175,20 +196,14 @@ document.onkeyup = function (event) {
     }
     //Reset the Game
     else {
+        //Reset our variables
         wins = 0;
-  
         lettersGuessed = "";
-    
         currentWord.word = currentWord.getWord();
-  
         currentWord.setDisplayWord();
- 
         guessesLeft = 10;
-    
         validGuesses.resetVG();
-    
         playing = true;
-       
         joinDW = ""
        
         for (n = 0; n < currentWord.displayWord.length; n++) {
@@ -196,20 +211,15 @@ document.onkeyup = function (event) {
             //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
             joinDW += "\xa0"
         }
-
+        //reset the display
         numWins.innerHTML = wins;
-
         partsFilled.textContent = joinDW;
-        
         numGuessesLeft.textContent = guessesLeft;
-    
         lettersGuessedDis.textContent = lettersGuessed;
-    
         ins.textContent = "Try to guess these rappers"
-        debugger
-        for (a=0;a < 12; a++){
+        for (a=0;a < 13; a++){
             albumCollage[a].setAttribute("src","assets/images/placeholderalbum.jpg");
         }
-        debugger
+       
     }
 }

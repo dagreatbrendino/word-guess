@@ -1,5 +1,5 @@
 body{
-    background-color: red;
+    background-color: black;
 }
 .bottom-buffer{
     margin-bottom: 20px;
@@ -7,4 +7,13 @@ body{
 .img-border{
     box-sizing: border-box;
     border: 2px solid white;
+}
+.container{
+    background-color: red;
+    border: 2px solid white;
+}
+.center{
+    text-align: center;
+    display: block;
+    margin: 0px auto;
 }
