@@ -7,6 +7,7 @@ var numGuessesLeft = document.getElementById("gL");
 var lettersGuessedDis = document.getElementById("lg");
 var albumCollage = document.getElementsByClassName("img-border");
 var displayAlbum = document.getElementById("display-image");
+var revealedAlbum = document.getElementById("image-revealed");
 //Status tells wether or not the game is active 
 var playing = true;
 
@@ -37,7 +38,7 @@ var validGuesses = {
 
 //Current Word Object
 var currentWord = {
-    word: " ", displayWord: [], artistIndex: firstIndex, 
+    word: " ", displayWord: [], artistIndex: firstIndex, numLetters: 0,
 
     //Function that returns the current word
     getWord: function () {
@@ -74,6 +75,8 @@ var currentWord = {
                 this.displayWord[i] = pg;
                 validGuesses[pg] = false;
                 correctGuess = true;
+                this.numLetters++
+                this.revealImage()
             }
         }
         //If the player's guess was not found in the current word then they lose a guess and the letter is added to the list of incorrect guesses. If this causes
@@ -106,6 +109,7 @@ var currentWord = {
         updatedAlbum.setAttribute("src", artistArray[this.artistIndex].albumImg);
         displayAlbum.setAttribute("src", artistArray[this.artistIndex].albumImg);
         wins++;
+        this.numLetters=0;
         if (wins === artistArray.length){
             this.playerWon();
         }
@@ -143,13 +147,12 @@ var currentWord = {
         }
         currentWord.setArtistIndex();
         currentWord.setWord(artistArray[currentWord.artistIndex].artistName);
-        debugger
         currentWord.setDisplayWord();
-        debugger
         guessesLeft = 10;
         validGuesses.resetVG();
         playing = true;
         joinDW = ""
+        this.numLetters=0;
 
        
         for (n = 0; n < currentWord.displayWord.length; n++) {
@@ -163,7 +166,7 @@ var currentWord = {
         numGuessesLeft.textContent = guessesLeft;
         lettersGuessedDis.textContent = lettersGuessed;
         ins.textContent = "Guess the artists unlock their albums!"
-        for (a=0;a < 13; a++){
+        for (a=0;a < 14; a++){
             albumCollage[a].setAttribute("src","assets/images/placeholderalbum.jpg");
         }
     },
@@ -175,6 +178,13 @@ var currentWord = {
     playerWon: function () {
         playing = false;
         ins.textContent ="Congrats! You found every artist! Press any key to play again..."
+    },
+    //This function will slowly reveal this image as the player guesses it
+    revealImage: function (){
+        revealedAlbum.setAttribute("src",artistArray[currentWord.artistIndex].albumImg);
+        var width = Math.floor(revealedAlbum.clientWidth *(1-((this.word.length - this.numLetters)/(this.word.length))));
+        var height = Math.floor(revealedAlbum.clientHeight *(1-((this.word.length - this.numLetters)/(this.word.length))));
+        revealedAlbum.setAttribute("style", "clip: rect(0, "+width+"px, "+height+"px, 0)" )
     }
 }
 

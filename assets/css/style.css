@@ -1,6 +1,7 @@
 @font-face{ font-family: BlackTop; src: url("../fonts/BlackTop.ttf")}
 body{
     background-image: url("../images/brickwall.jpg");
+    background-size: 100%;
 }
 h1{
     font-family: BlackTop;
@@ -26,4 +27,9 @@ h1{
     text-align: center;
     display: block;
     margin: 0px auto;
+}
+.image-revealer{
+    z-index: 100; 
+    position:absolute;
+    left: 25%;
 }
