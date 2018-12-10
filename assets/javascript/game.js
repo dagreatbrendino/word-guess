@@ -12,12 +12,15 @@ var playing = true;
 
 //Initializing player guess
 var playerGuess = ""
+//Array of all the hip hop artist objects that are used by the object currentWord to pull relevant information
 var artistArray=[{artistName: "kendrick lamar", alreadyGuessed: false, albumImg: "assets/images/kendricklamar.jpg"},{artistName: "kanye west",alreadyGuessed: false,
-albumImg: "assets/images/kanyewest.jpg"},{artistName:"drake", alreadyGuessed: false, albumImg:"assets/images/drake.jpg"}]
-//Array of Words to choose from
-var myWords = ["kendrick lamar", "kanye west", "drake"];
-//Array of images for rapper album art work
-var albumArt = { "kendrick lamar": "assets/images/kendricklamar.jpg", "kanye west": "assets/images/kanyewest.jpg", "drake": "assets/images/drake.jpg" }
+    albumImg: "assets/images/kanyewest.jpg"},{artistName:"drake", alreadyGuessed: false, albumImg:"assets/images/drake.jpg"}, 
+    {artistName: "j cole", alreadyGuessed: false, albumImg:"assets/images/jcole.jpg"}, {artistName: "tupac", alreadyGuessed: false, albumImg:"assets/images/tupac.jpg"},
+    {artistName: "tyler the creator", alreadyGuessed: false, albumImg:"assets/images/tylerthecreator.jpg"},{artistName:"pusha t", alreadyGuessed: false, albumImg:"assets/images/pushat.jpg"},
+    {artistName:"earl sweatshirt", alreadyGuessed: false, albumImg:"assets/images/earlsweatshirt.jpg"}, {artistName:"mac miller", alreadyGuessed: false, albumImg:"assets/images/macmiller.jpg"},
+    {artistName:"vince staples", alreadyGuessed: false, albumImg:"assets/images/vincestaples.jpg"}, {artistName:"chance the rapper", alreadyGuessed: false, albumImg:"assets/images/chancetherapper.jpg"},
+    {artistName:"frank ocean", alreadyGuessed: false, albumImg:"assets/images/frankocean.jpg"}]
+
 var firstIndex = (Math.floor(Math.random()* 3));
 //Object that contains all valid inputs. When the user guesses a letter, it is removed from valid inputs until the next word is generated. 
 var validGuesses = {
@@ -36,27 +39,20 @@ var validGuesses = {
 var currentWord = {
     word: " ", displayWord: [], artistIndex: firstIndex, 
 
-    //Function that gets a word from my array of words and sets the current word to it
+    //Function that returns the current word
     getWord: function () {
         return this.word;
-        // artistIndex = Math.floor(Math.random() * artistArray.length)
-        // debugger;
-        // if(!(artistArray[artistIndex].alreadyGuessed)){
-        //     debugger
-        //     return artistArray[artistIndex].artistName;
-        // }
-        // else{
-        //     debugger;
-        //     this.getWord();
-        // }
     },
+    //Function that takes in an artist and sets them equal to the current word
     setWord: function (artist){
         
         this.word = artist;
     },
+    //Function that returns the index of the current artist object being referenced 
     getArtistIndex: function(){
         return this.artistIndex;
     },
+    //Function picks a new index to grab an artist from the artist array. Importantly, it cannot pick an index for an artist that the player has already found
     setArtistIndex: function() {
         this.artistIndex = Math.floor(Math.random()* artistArray.length)
         if ((artistArray[this.artistIndex].alreadyGuessed)){
@@ -97,26 +93,32 @@ var currentWord = {
         }
     },
 
-    /*When this function is called it is because all letters have been correctly guessed. The list of incorrect guesses is reset, The display album will be revealed to be the 
-    artist who was just found. The artist's album art work will also be updated in the album collage. A new word is picked and passed to the display word.  a new word is picked
-   , the number of wins is incremeneted and guesses are reset. We then call the function to revalidate all inputs a-z */
+    /*When this function is called it is because all letters have been correctly guessed. The artist object is updated to reflect that it has already been found. The list of 
+    incorrect guesses is reset, The display album will be revealed to be the artist who was just found. The artist's album art work will also be updated in the album collage.
+    The player's score increases by one. If the player has guessed every artist, the playerWon() function is called, and the game is over. If the player has not yet won
+    A new word is picked and passed to the display word. The player is then given 5 additional guesses We then call the function to revalidate all inputs a-z */
     wordComplete: function () {
         artistArray[this.artistIndex].alreadyGuessed = true;
         lettersGuessed = "";
         var idString = this.word;
         idString = idString.replace(/\s+/g, '');
         var updatedAlbum = document.getElementById(idString);
-        updatedAlbum.setAttribute("src", albumArt[currentWord.word]);
-        displayAlbum.setAttribute("src", albumArt[currentWord.word]);
+        updatedAlbum.setAttribute("src", artistArray[this.artistIndex].albumImg);
+        displayAlbum.setAttribute("src", artistArray[this.artistIndex].albumImg);
         wins++;
         if (wins === artistArray.length){
             this.playerWon();
         }
-        guessesLeft = 10;
+        if(( guessesLeft < 7)){
+             guessesLeft += 5;
+        }
         validGuesses.resetVG();
-        this.setArtistIndex();
-        this.setWord(artistArray[this.artistIndex].artistName);
-        this.setDisplayWord();
+        debugger
+        if(playing){
+            this.setArtistIndex();
+            this.setWord(artistArray[this.artistIndex].artistName);
+            this.setDisplayWord();
+        }
     },
 
     //This function sets the display word to be a number of dashes in the spots of the letters and " " of the word
@@ -132,18 +134,23 @@ var currentWord = {
         }
         return this.displayWord;
     },
+    //Resets all the variables back to their original state. 
     resetVars: function(){
         wins = 0;
         lettersGuessed = "";
-        currentWord.word = currentWord.getWord();
+        for (r=0; r < artistArray.length; r++){
+            artistArray[r].alreadyGuessed = false;
+        }
+        currentWord.setArtistIndex();
+        currentWord.setWord(artistArray[currentWord.artistIndex].artistName);
+        debugger
         currentWord.setDisplayWord();
+        debugger
         guessesLeft = 10;
         validGuesses.resetVG();
         playing = true;
         joinDW = ""
-        for (r=0; r < artistArray.length; r++){
-            artistArray[r].alreadyGuessed = false;
-        }
+
        
         for (n = 0; n < currentWord.displayWord.length; n++) {
             joinDW += currentWord.displayWord[n];
@@ -155,7 +162,7 @@ var currentWord = {
         partsFilled.textContent = joinDW;
         numGuessesLeft.textContent = guessesLeft;
         lettersGuessedDis.textContent = lettersGuessed;
-        ins.textContent = "Try to guess these rappers"
+        ins.textContent = "Guess the artists unlock their albums!"
         for (a=0;a < 13; a++){
             albumCollage[a].setAttribute("src","assets/images/placeholderalbum.jpg");
         }
@@ -166,7 +173,8 @@ var currentWord = {
         ins.textContent = "You are out of guesses! Press any key to restart..."
     },
     playerWon: function () {
-        alert("Congrats you unlocked every album!")
+        playing = false;
+        ins.textContent ="Congrats! You found every artist! Press any key to play again..."
     }
 }
 

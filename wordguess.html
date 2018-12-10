@@ -10,15 +10,21 @@
     
 </head>
 <body>
+        <h1>Hip Hop Artist Word Guess</h1>
     <!-- Container for the entire game -->
     <main id="all" class="container">
+
         <div class="row justify-content-center">
             <!-- column that contains collage of images that reference rappers already guessed-->
             <div class ="col-6">
                 <!-- 4 rows by 3 columns -->
-
+                <div clas="row top-buffer bottom-buffer">
+                    <div class="col">
+                        <h4>Once you correctly guess an artist, click on their album to play it!</h4>
+                    </div>
+                </div>
                 <!-- Row 1 -->
-                <div class="row bottom-buffer">
+                <div class="row bottom-buffer top-buffer">
                     <div class="col-4">
                         <img id="kendricklamar" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
@@ -33,46 +39,46 @@
                 <!-- Row 2 -->
                 <div class="row bottom-buffer">
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="jcole" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="tupac" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="tylerthecreator" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                 </div>
 
                 <!-- Row 3 -->
                 <div class="row bottom-buffer">
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="pushat" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="earlsweatshirt" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="macmiller" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                 </div>
     
                 <!-- Row 4 -->
                 <div class="row bottom-buffer">
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="vincestaples" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="chancetherapper" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                     <div class="col-4">
-                        <img class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="frankocean" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
                     </div>
                 </div>
             </div>
             <!-- Right hand side of display that updates information about the current rapper being guessed -->
             <div class="col-6">
                     <div>
-                            <p class="center" id = "instructions">Try to guess my word <br></p>
+                            <p class="center" id = "instructions">Guess the artists to unlock their albums!<br></p>
                             <p class="center" >Wins</p>
                             <p class="center"  id = "w"></p>
                             <img id="display-image" class="img-fluid img-border w-50 center" src="assets/images/placeholderalbum.jpg" alt="placeholderalbum">
@@ -84,8 +90,13 @@
                     </div>
 
             </div>
+            
         </div>
-
+        <div class="row top-buffer justify-content-center">
+                <div class="col-6">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/mzKKesXLcE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+        </div>
     </main>
 
     <script src="assets/javascript/game.js"></script>
