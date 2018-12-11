@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Word Guess</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    
+</head>
+<body>
+        <h1>Hip Hop Artist Word Guess</h1>
+    <!-- Container for the entire game -->
+    <main id="all" class="container">
+
+        <div class="row justify-content-center">
+            <!-- column that contains collage of images that reference rappers already guessed-->
+            <div class ="col-6">
+                <!-- 4 rows by 3 columns -->
+                <div clas="row top-buffer bottom-buffer">
+                    <div class="col">
+                        <h4>Once you correctly guess an artist, click on their album to play it!</h4>
+                    </div>
+                </div>
+                <!-- Row 1 -->
+                <div class="row bottom-buffer top-buffer">
+                    <div class="col-4">
+                        <img id="kendricklamar" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=0 onclick="playAlbum(0)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="kanyewest" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=1 onclick="playAlbum(1)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="drake" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=2 onclick="playAlbum(2)"/>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="row bottom-buffer">
+                    <div class="col-4">
+                        <img id="jcole" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=3 onclick="playAlbum(3)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="tupac" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=4/ onclick="playAlbum(4)">
+                    </div>
+                    <div class="col-4">
+                        <img id="tylerthecreator" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=5 onclick="playAlbum(5)"/>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="row bottom-buffer">
+                    <div class="col-4">
+                        <img id="pushat" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=6 onclick="playAlbum(6)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="earlsweatshirt" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=7 onclick="playAlbum(7)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="macmiller" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=8 onclick="playAlbum(8)"/>
+                    </div>
+                </div>
+    
+                <!-- Row 4 -->
+                <div class="row bottom-buffer">
+                    <div class="col-4">
+                        <img id="vincestaples" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=9 onclick="playAlbum(9)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="chancetherapper" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=10 onclick="playAlbum(10)"/>
+                    </div>
+                    <div class="col-4">
+                        <img id="frankocean" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=11 onclick="playAlbum(11)"/>
+                    </div>
+                </div>
+            </div>
+            <!-- Right hand side of display that updates information about the current rapper being guessed -->
+            <div class="col-6">
+                    <div>
+                            <p class="center" id = "instructions">Guess the artists to unlock their albums!<br></p>
+                            <p class="center" >Wins</p>
+                            <p class="center"  id = "w"></p>
+                            <div style="position: relative">   
+                                <img id="image-revealed" style=" " class="img-fluid img-border w-50 center image-revealer" src="assets/images/placeholderalbum.jpg" alt="placeholderalbum">
+                                <img id="display-image" class="img-fluid img-border w-50 center" src="assets/images/placeholderalbum.jpg" alt="placeholderalbum">
+                            </div>
+                            <p class="center"  id = "filled"></p>
+                            <p class="center" >Guesses Left</p>
+                            <p class="center"  id ="gL"></p>
+                            <p class="center" >Letters Guessed</p>
+                            <p class="center"  id = "lg"></p>
+                    </div>
+
+            </div>
+            
+        </div>
+        <div class="row top-buffer justify-content-center">
+                <div class="col-6">
+                    <audio id="audioPlayer" controls autoplay>
+                        <source  id="audioSource" src="http://brendanmkelly.com/assets/audio/backgroundbeat.mp3"
+                                type='audio/mp3'>
+                        <!-- The next two lines are only executed if the browser doesn't support MP4 files -->
+                       
+                        <!-- The next line will only be executed if the browser doesn't support the <audio> tag-->
+                        <p>Your user agent does not support the HTML5 Audio element.</p>
+                       </audio>
+                </div>
+        </div>
+    </main>
+
+    <script src="assets/javascript/game.js"></script>
+</body>
+</html>
