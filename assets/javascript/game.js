@@ -8,6 +8,7 @@ var lettersGuessedDis = document.getElementById("lg");
 var albumCollage = document.getElementsByClassName("img-border");
 var displayAlbum = document.getElementById("display-image");
 var revealedAlbum = document.getElementById("image-revealed");
+var musicPlayer = document.getElementById("audioPlayer");
 //Status tells wether or not the game is active 
 var playing = true;
 
@@ -214,6 +215,15 @@ partsFilled.textContent = joinDW;
 numWins.textContent = wins;
 gL.textContent = guessesLeft;
 
+
+document.getElementsByClassName('album').onclick = function () {playAlbum()};
+function playAlbum(){
+    debugger;
+    if (artistArray[parseInt(this).val()].alreadyGuessed){
+        musicPlayer.setAttribute("src",("brendanmkelly.com/assets/audio/" + artistArray[parseInt(this).val()]+".mp3"));
+    }
+}
+
 //Function that Executes when the Player Presses a Key
 document.onkeyup = function (event) {
 
@@ -257,4 +267,5 @@ document.onkeyup = function (event) {
         //Reset our variables
         currentWord.resetVars();
     }
+
 }

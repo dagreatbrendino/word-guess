@@ -26,52 +26,52 @@
                 <!-- Row 1 -->
                 <div class="row bottom-buffer top-buffer">
                     <div class="col-4">
-                        <img id="kendricklamar" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="kendricklamar" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=0/>
                     </div>
                     <div class="col-4">
-                        <img id="kanyewest" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="kanyewest" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=1/>
                     </div>
                     <div class="col-4">
-                        <img id="drake" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="drake" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=2/>
                     </div>
                 </div>
 
                 <!-- Row 2 -->
                 <div class="row bottom-buffer">
                     <div class="col-4">
-                        <img id="jcole" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="jcole" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=3/>
                     </div>
                     <div class="col-4">
-                        <img id="tupac" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="tupac" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=4/>
                     </div>
                     <div class="col-4">
-                        <img id="tylerthecreator" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="tylerthecreator " class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=5/>
                     </div>
                 </div>
 
                 <!-- Row 3 -->
                 <div class="row bottom-buffer">
                     <div class="col-4">
-                        <img id="pushat" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="pushat" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=6/>
                     </div>
                     <div class="col-4">
-                        <img id="earlsweatshirt" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="earlsweatshirt " class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=7/>
                     </div>
                     <div class="col-4">
-                        <img id="macmiller" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="macmiller" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=8/>
                     </div>
                 </div>
     
                 <!-- Row 4 -->
                 <div class="row bottom-buffer">
                     <div class="col-4">
-                        <img id="vincestaples" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="vincestaples" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=9/>
                     </div>
                     <div class="col-4">
-                        <img id="chancetherapper" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="chancetherapper" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=10/>
                     </div>
                     <div class="col-4">
-                        <img id="frankocean" class="img-fluid img-border" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" />
+                        <img id="frankocean" class="img-fluid img-border album" src=assets/images/placeholderalbum.jpg alt="placeholderalbum" value=11/>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,15 @@
         </div>
         <div class="row top-buffer justify-content-center">
                 <div class="col-6">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PL4iddgIQErDUufHZ21sjEZ7cPSewOYNs1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <audio controls id="audioPlayer">
+                        <source src=""
+                                type='audio/mp4'>
+                        <!-- The next two lines are only executed if the browser doesn't support MP4 files -->
+                        <source src="http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.oga"
+                                type='audio/ogg; codecs=vorbis'>
+                        <!-- The next line will only be executed if the browser doesn't support the <audio> tag-->
+                        <p>Your user agent does not support the HTML5 Audio element.</p>
+                       </audio>
                 </div>
         </div>
     </main>
