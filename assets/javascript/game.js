@@ -9,6 +9,7 @@ var albumCollage = document.getElementsByClassName("img-border");
 var displayAlbum = document.getElementById("display-image");
 var revealedAlbum = document.getElementById("image-revealed");
 var musicPlayer = document.getElementById("audioPlayer");
+var musicSource = document.getElementById("audioSource");
 //Status tells wether or not the game is active 
 var playing = true;
 
@@ -118,7 +119,6 @@ var currentWord = {
              guessesLeft += 5;
         }
         validGuesses.resetVG();
-        debugger
         if(playing){
             this.setArtistIndex();
             this.setWord(artistArray[this.artistIndex].artistName);
@@ -170,6 +170,7 @@ var currentWord = {
         for (a=0;a < 14; a++){
             albumCollage[a].setAttribute("src","assets/images/placeholderalbum.jpg");
         }
+        playAlbum(12);
     },
     //sets the playing status to false so that the player can reset the game
     gameOver: function () {
@@ -215,12 +216,19 @@ partsFilled.textContent = joinDW;
 numWins.textContent = wins;
 gL.textContent = guessesLeft;
 
-
-document.getElementsByClassName('album').onclick = function () {playAlbum()};
-function playAlbum(){
-    debugger;
-    if (artistArray[parseInt(this).val()].alreadyGuessed){
-        musicPlayer.setAttribute("src",("brendanmkelly.com/assets/audio/" + artistArray[parseInt(this).val()]+".mp3"));
+function playAlbum(value){
+    debugger
+    if(value!= 12){
+        debugger
+        if (artistArray[value].alreadyGuessed){
+            musicSource.setAttribute("src",("http://brendanmkelly.com/assets/audio/" + artistArray[value].artistName.split(' ').join('') + ".mp3"));
+            audioPlayer.load();
+        }
+    }
+    else{
+        debugger
+        musicSource.setAttribute("src",("http://brendanmkelly.com/assets/audio/backgroundbeat.mp3"));
+        audioPlayer.load();
     }
 }
 
@@ -246,7 +254,6 @@ document.onkeyup = function (event) {
         }
         catch (e) {
             alert("Please enter a letter a-z! " + e.message)
-            ProcessExceptionInformation(e.message, e.stack)
 
         }
         //updates the preview of the word if needeed
