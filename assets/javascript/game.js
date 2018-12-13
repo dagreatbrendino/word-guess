@@ -10,8 +10,13 @@ var displayAlbum = document.getElementById("display-image");
 var revealedAlbum = document.getElementById("image-revealed");
 var musicPlayer = document.getElementById("audioPlayer");
 var musicSource = document.getElementById("audioSource");
-//Status tells wether or not the game is active 
-var playing = true;
+var gameCover = document.getElementById("cover");
+var difficultySlide = document.getElementById("difficulty-selector");
+
+var easy = true
+//Variables that tell us the game state the player is currently in
+var gameStarted = false; 
+var playing = false;
 
 //Initializing player guess
 var playerGuess = ""
@@ -78,7 +83,6 @@ var currentWord = {
                 validGuesses[pg] = false;
                 correctGuess = true;
                 this.numLetters++
-                this.revealImage()
             }
         }
         //If the player's guess was not found in the current word then they lose a guess and the letter is added to the list of incorrect guesses. If this causes
@@ -115,8 +119,11 @@ var currentWord = {
         if (wins === artistArray.length){
             this.playerWon();
         }
-        if(( guessesLeft < 7)){
+        if((easy && guessesLeft < 7)){
              guessesLeft += 5;
+        }
+        else{
+            guessesLeft +=1;
         }
         validGuesses.resetVG();
         if(playing){
@@ -126,7 +133,7 @@ var currentWord = {
         }
     },
 
-    //This function sets the display word to be a number of dashes in the spots of the letters and " " of the word
+    //This function sets the display word to be a number of dashes in the spots of the letters of the word
     setDisplayWord: function () {
         this.displayWord = [];
         for (l = 0; l < currentWord.word.length; l++) {
@@ -155,21 +162,11 @@ var currentWord = {
         joinDW = ""
         this.numLetters=0;
 
-       
-        for (n = 0; n < currentWord.displayWord.length; n++) {
-            joinDW += currentWord.displayWord[n];
-            //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
-            joinDW += "\xa0"
-        }
-        //reset the display
-        numWins.innerHTML = wins;
-        partsFilled.textContent = joinDW;
-        numGuessesLeft.textContent = guessesLeft;
-        lettersGuessedDis.textContent = lettersGuessed;
-        ins.textContent = "Guess the artists unlock their albums!"
+        //Resets all the images in the album collage
         for (a=0;a < 14; a++){
             albumCollage[a].setAttribute("src","assets/images/placeholderalbum.jpg");
         }
+        //Resets the song being played to the original song
         playAlbum(12);
     },
     //sets the playing status to false so that the player can reset the game
@@ -177,6 +174,7 @@ var currentWord = {
         playing = false;
         ins.textContent = "You are out of guesses! Press any key to restart..."
     },
+    //This function is similar to above, but is called when the player has found every artist
     playerWon: function () {
         playing = false;
         ins.textContent ="Congrats! You found every artist! Press any key to play again..."
@@ -187,6 +185,22 @@ var currentWord = {
         var width = Math.floor(revealedAlbum.clientWidth *(1-((this.word.length - this.numLetters)/(this.word.length))));
         var height = Math.floor(revealedAlbum.clientHeight *(1-((this.word.length - this.numLetters)/(this.word.length))));
         revealedAlbum.setAttribute("style", "clip: rect(0, "+width+"px, "+height+"px, 0)" )
+    },
+    //This function is used to update the display to all the current values of our variables used in it
+    updateDisplay: function ( ){
+        numWins.innerHTML = wins;
+        if(easy){
+            this.revealImage();
+        }
+        joinDW=""
+        for (n = 0; n < this.displayWord.length; n++) {
+            joinDW += this.displayWord[n];
+            //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
+            joinDW += "\xa0"
+        }
+        partsFilled.textContent = joinDW;
+        numGuessesLeft.textContent = guessesLeft;
+        lettersGuessedDis.textContent = lettersGuessed;
     }
 }
 
@@ -204,31 +218,53 @@ currentWord.setWord(artistArray[currentWord.artistIndex].artistName);
 //This calls the function to set the display word to be a number of dashes equivalent to the number of letters in the word
 currentWord.displayWord = currentWord.setDisplayWord();
 
-//Sets placeholder so the player can see the structure of the word they need to guess
-var joinDW = ""
-for (q = 0; q < currentWord.displayWord.length; q++) {
-    joinDW += currentWord.displayWord[q];
-    //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
-    joinDW += "\xa0"
-}
-//Initializes rest of display
-partsFilled.textContent = joinDW;
-numWins.textContent = wins;
-gL.textContent = guessesLeft;
-
+//This function is called whenever the player click on an album in the collage. If they have unlocked the album, it will play a song from it
 function playAlbum(value){
-    debugger
     if(value!= 12){
-        debugger
         if (artistArray[value].alreadyGuessed){
             musicSource.setAttribute("src",("http://brendanmkelly.com/assets/audio/" + artistArray[value].artistName.split(' ').join('') + ".mp3"));
             audioPlayer.load();
         }
     }
     else{
-        debugger
         musicSource.setAttribute("src",("http://brendanmkelly.com/assets/audio/backgroundbeat.mp3"));
         audioPlayer.load();
+    }
+}
+//When the player stars the game the game cover is cleared and then shrinks to the middle of the display
+function startGame(){
+    var id = setInterval(frame,5);
+    var size = 100;
+    gameCover.innerHTML="";
+    function frame (){
+   
+        
+        if(size == 0){
+            gameCover.style.visibility = "hidden";
+            clearInterval(id);
+        }
+        else{
+         
+            size--;
+            gameCover.style.width = size +"%";
+            gameCover.style.height = size + "%";
+            gameCover.style.left = ((100 - size)/2) + "%";
+            gameCover.style.top = ((100 - size)/2) +"%";
+          
+        }
+    }
+}
+//On the first screen, the player can use a difficutly slider to choose their difficulty. When they click the slider,
+//it's checked value is received and used to change easy to true or false. In the game easy mode allows the album revealer
+//to be called, and also allows the player to receieve 5 additional guesses when they have less than 7 left
+difficultySlide.onclick = function(){
+    if(difficultySlide.checked === true){
+        easy = false;
+        revealedAlbum.setAttribute("style", "visibility: hidden");
+    }
+    else{
+        easy = true;
+        revealedAlbum.setAttribute("style", "visibility: visible");
     }
 }
 
@@ -247,7 +283,7 @@ document.onkeyup = function (event) {
 
             }
             else {
-                // alert("you already guessed that letter")
+                //The letter has already been guessed, so we don't need to do anything
 
             }
 
@@ -256,23 +292,16 @@ document.onkeyup = function (event) {
             alert("Please enter a letter a-z! " + e.message)
 
         }
-        //updates the preview of the word if needeed
-        joinDW = ""
-        for (n = 0; n < currentWord.displayWord.length; n++) {
-            joinDW += currentWord.displayWord[n];
-            //Adds a non breaking space to the display word because you can't add multiple spaces in a row to a string without a non-breaking char
-            joinDW += "\xa0"
-        }
-        //updates the rest of the desplay
-        numWins.textContent = wins;
-        partsFilled.textContent = joinDW;
-        numGuessesLeft.textContent = guessesLeft;
-        lettersGuessedDis.textContent = lettersGuessed;
+        currentWord.updateDisplay();
     }
     //Reset the Game
     else {
-        //Reset our variables
+        if (!gameStarted){
+            startGame();
+        }
+        //Reset our variables and update the display
         currentWord.resetVars();
+        currentWord.updateDisplay();
+        ins.textContent="Guess the artists to unlock their albums!";
     }
-
 }

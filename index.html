@@ -20,7 +20,7 @@
                 <!-- 4 rows by 3 columns -->
                 <div clas="row top-buffer bottom-buffer">
                     <div class="col">
-                        <h4>Once you correctly guess an artist, click on their album to play it!</h4>
+                        <h4>Once you reveal an artist, click on their album to play a song from it!</h4>
                     </div>
                 </div>
                 <!-- Row 1 -->
@@ -79,7 +79,7 @@
             <div class="col-6">
                     <div>
                             <p class="center" id = "instructions">Guess the artists to unlock their albums!<br></p>
-                            <p class="center" >Wins</p>
+                            <p class="center" >Score</p>
                             <p class="center"  id = "w"></p>
                             <div style="position: relative">   
                                 <img id="image-revealed" style=" " class="img-fluid img-border w-50 center image-revealer" src="assets/images/placeholderalbum.jpg" alt="placeholderalbum">
@@ -98,17 +98,31 @@
         <div class="row top-buffer justify-content-center">
                 <div class="col-6">
                     <audio id="audioPlayer" controls autoplay>
-                        <source  id="audioSource" src="http://brendanmkelly.com/assets/audio/backgroundbeat.mp3"
+                        <source  id="audioSource" src=""
                                 type='audio/mp3'>
-                        <!-- The next two lines are only executed if the browser doesn't support MP4 files -->
-                       
+     
                         <!-- The next line will only be executed if the browser doesn't support the <audio> tag-->
                         <p>Your user agent does not support the HTML5 Audio element.</p>
                        </audio>
                 </div>
         </div>
-    </main>
 
+        <div id=cover class="game-cover">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <h2 class="center">Press Any Key To get Started!</h2>
+                    <div class="center">
+                        <span> Easy</span>
+                        <label class="switch">
+                            <input id ="difficulty-selector" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span> Hard</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     <script src="assets/javascript/game.js"></script>
 </body>
 </html>
