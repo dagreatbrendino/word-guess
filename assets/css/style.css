@@ -107,3 +107,11 @@ main{
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .now-playing{
+    position: absolute;
+    top: 0%;
+    padding: inherit;
+    left: 0;
+    visibility: hidden;
+  }

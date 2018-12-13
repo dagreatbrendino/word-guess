@@ -220,10 +220,17 @@ currentWord.displayWord = currentWord.setDisplayWord();
 
 //This function is called whenever the player click on an album in the collage. If they have unlocked the album, it will play a song from it
 function playAlbum(value){
+    var nowPlayingOverlayReset = document.getElementsByClassName("now-playing");
+    for(y = 0; y < nowPlayingOverlayReset.length; y++){
+        nowPlayingOverlayReset[y].setAttribute("style","visibility: hidden");
+    }
+
     if(value!= 12){
         if (artistArray[value].alreadyGuessed){
             musicSource.setAttribute("src",("http://brendanmkelly.com/assets/audio/" + artistArray[value].artistName.split(' ').join('') + ".mp3"));
             audioPlayer.load();
+            var nowPlayingOverlay = document.getElementById("nowplaying" + value);
+            nowPlayingOverlay.setAttribute("style","visibility: visible");
         }
     }
     else{
